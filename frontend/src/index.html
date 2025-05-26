@@ -3,128 +3,841 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChadCan.Help - Free Chat</title>
-    <link href="styles.css" rel="stylesheet">
-    <script src="bundle.js" defer></script>
+    <title>ChadCan.Help - Chat with AI</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #1c1e21;
+            line-height: 1.5;
+        }
+        
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: #1a4789;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .try-button {
+            background-color: white;
+            color: #1a4789;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .try-button:hover {
+            background-color: #f0f2f5;
+        }
+        
+        /* Hero section */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+        
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            color: #1c1e21;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: #65676b;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .start-button {
+            background-color: #1a4789;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .start-button:hover {
+            background-color: #0e3a7c;
+        }
+        
+        /* Features section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px auto;
+            max-width: 1000px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a4789;
+        }
+        
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .feature-card p {
+            color: #65676b;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1c1e21;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        /* Chat window */
+        .chat-window {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 360px;
+            height: 500px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-window.hidden {
+            transform: translateY(100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .chat-window.minimized {
+            height: 60px;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background-color: #1a4789;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-title {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .chat-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-control-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+        
+        .chat-control-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .chat-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 15px;
+            background-color: #f0f2f5;
+            font-size: 12px;
+            color: #65676b;
+            border-bottom: 1px solid #e4e6eb;
+        }
+        
+        .status-text {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #31a24c;
+        }
+        
+        .chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            max-width: 80%;
+        }
+        
+        .message.user {
+            margin-left: auto;
+            flex-direction: row-reverse;
+        }
+        
+        .message-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .message-content {
+            padding: 10px 12px;
+            border-radius: 18px;
+            font-size: 14px;
+            word-break: break-word;
+        }
+        
+        .message.bot .message-content {
+            background-color: #f0f2f5;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message.user .message-content {
+            background-color: #1a4789;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .typing-indicator.hidden {
+            display: none;
+        }
+        
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+            padding: 10px 12px;
+            background-color: #f0f2f5;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #65676b;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typingAnimation {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.6;
+            }
+            30% {
+                transform: translateY(-4px);
+                opacity: 1;
+            }
+        }
+        
+        .chat-input {
+            padding: 10px 15px;
+            border-top: 1px solid #e4e6eb;
+        }
+        
+        .input-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .message-input {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid #e4e6eb;
+            border-radius: 20px;
+            outline: none;
+            font-size: 14px;
+        }
+        
+        .message-input:focus {
+            border-color: #1a4789;
+        }
+        
+        .send-button {
+            background-color: #1a4789;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .send-button:hover {
+            background-color: #0e3a7c;
+        }
+        
+        .send-button:disabled {
+            background-color: #e4e6eb;
+            cursor: not-allowed;
+        }
+        
+        .timer-container {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #65676b;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .chat-window {
+                width: 100%;
+                height: 100%;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
+            }
+        }
+        
+        /* Genspark notice dialog styles */
+        .genspark-notice-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        
+        .genspark-notice-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .genspark-notice-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        .genspark-notice-list {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .genspark-notice-list li {
+            margin-bottom: 8px;
+        }
+        
+        .genspark-notice-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .genspark-notice-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .genspark-notice-ok {
+            background-color: #1a4789;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
-    <header class="bg-blue-600 text-white shadow-md">
-        <div class="container mx-auto px-4 py-6">
-            <div class="flex justify-between items-center">
-                <h1 class="text-3xl font-bold">ChadCan.Help</h1>
-                <button id="try-it-button" class="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold hover:bg-blue-100 transition-colors">
-                    Try It Free
-                </button>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">ChadCan.Help</div>
+                <button class="try-button" id="try-button">Try It Free</button>
             </div>
         </div>
     </header>
-
-    <main class="flex-grow container mx-auto px-4 py-8">
-        <section class="max-w-4xl mx-auto text-center mb-12">
-            <h2 class="text-4xl font-bold text-gray-800 mb-4">Get Help With Anything</h2>
-            <p class="text-xl text-gray-600 mb-8">
-                Have a question? Need assistance? Chat with our AI assistant for free and get the help you need right away.
-            </p>
-            <div class="flex justify-center">
-                <button id="main-try-button" class="bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg">
-                    Start Chatting Now
-                </button>
-            </div>
+    
+    <main>
+        <section class="hero container">
+            <h1>Get Help With Anything</h1>
+            <p>Have a question? Need assistance? Chat with our AI assistant for free and get the help you need right away.</p>
+            <button class="start-button" id="start-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: text-bottom;">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                Start Chatting Now
+            </button>
         </section>
-
-        <section class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <div class="text-blue-600 text-4xl mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mx-auto">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        
+        <section class="features container">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold text-center mb-2">Quick Responses</h3>
-                <p class="text-gray-600 text-center">
-                    Get instant answers to your questions without waiting in long queues.
-                </p>
+                <h3>Quick Responses</h3>
+                <p>Get instant answers to your questions without waiting in long queues.</p>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <div class="text-blue-600 text-4xl mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mx-auto">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold text-center mb-2">Smart AI</h3>
-                <p class="text-gray-600 text-center">
-                    Powered by advanced AI technology to provide accurate and helpful information.
-                </p>
+                <h3>Smart AI</h3>
+                <p>Powered by advanced AI technology to provide accurate and helpful information.</p>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <div class="text-blue-600 text-4xl mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mx-auto">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold text-center mb-2">Completely Free</h3>
-                <p class="text-gray-600 text-center">
-                    Try our service at no cost for up to 15 minutes per session.
-                </p>
+                <h3>Completely Free</h3>
+                <p>Try our service at no cost for up to 15 minutes per session.</p>
             </div>
         </section>
     </main>
-
-    <footer class="bg-gray-800 text-white py-6">
-        <div class="container mx-auto px-4 text-center">
+    
+    <footer>
+        <div class="container">
             <p>&copy; 2025 ChadCan.Help. All rights reserved.</p>
         </div>
     </footer>
-
-    <!-- Chat Window Template (Hidden by default) -->
-    <div id="chat-container" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white w-full max-w-md h-[600px] max-h-[90vh] rounded-lg shadow-xl flex flex-col">
-            <div class="bg-blue-600 text-white px-4 py-3 rounded-t-lg flex justify-between items-center">
-                <h3 class="font-semibold">Chat with ChadCan.Help</h3>
-                <button id="close-chat" class="text-white hover:text-gray-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    
+    <div class="chat-window hidden" id="chat-window">
+        <div class="chat-header">
+            <div class="chat-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                Chat with ChadCan.Help
+            </div>
+            <div class="chat-controls">
+                <button class="chat-control-btn" id="minimize-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+                <button class="chat-control-btn" id="close-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
                 </button>
             </div>
-            <div id="chat-messages" class="flex-grow p-4 overflow-y-auto bg-gray-50">
-                <div class="chat-message bot">
-                    <div class="flex items-end">
-                        <div class="flex flex-col space-y-2 text-sm max-w-xs mx-2 order-2 items-start">
-                            <div>
-                                <span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-blue-600 text-white">
-                                    Hi there! How can I help you today?
-                                </span>
-                            </div>
-                        </div>
-                        <img src="https://ui-avatars.com/api/?name=Chad&background=4F46E5&color=fff" alt="Bot avatar" class="w-8 h-8 rounded-full order-1">
-                    </div>
-                </div>
-                <!-- More messages will be added dynamically -->
+        </div>
+        
+        <div class="chat-status">
+            <div class="status-text">
+                <span class="status-indicator"></span>
+                <span id="status-text">Ready to help</span>
             </div>
-            <div id="typing-indicator" class="px-4 py-2 hidden">
-                <div class="flex items-end">
-                    <img src="https://ui-avatars.com/api/?name=Chad&background=4F46E5&color=fff" alt="Bot avatar" class="w-6 h-6 rounded-full mr-2">
-                    <div class="typing-animation">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
+            <div class="timer" id="timer">15:00</div>
+        </div>
+        
+        <div class="chat-messages" id="chat-messages">
+            <!-- Messages will be added here dynamically -->
+        </div>
+        
+        <div class="typing-indicator hidden" id="typing-indicator">
+            <div class="message-avatar">
+                <img src="https://ui-avatars.com/api/?name=AI&background=1a4789&color=fff" alt="AI">
             </div>
-            <div class="border-t p-4">
-                <form id="chat-form" class="flex">
-                    <input type="text" id="message-input" class="flex-grow border rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Type your message...">
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                        </svg>
-                    </button>
-                </form>
-                <div class="text-xs text-gray-500 mt-2 text-center">
-                    Session limited to 15 minutes. <span id="timer" class="font-medium">15:00</span> remaining.
-                </div>
+            <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
             </div>
         </div>
+        
+        <div class="chat-input">
+            <form class="input-container" id="message-form">
+                <input type="text" class="message-input" id="message-input" placeholder="Type your message..." disabled>
+                <button type="submit" class="send-button" id="send-btn" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </form>
+            <div class="timer-container">
+                Session limited to 15 minutes.
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        class ChadCanChat {
+            constructor() {
+                // DOM Elements
+                this.chatWindow = document.getElementById('chat-window');
+                this.chatMessages = document.getElementById('chat-messages');
+                this.typingIndicator = document.getElementById('typing-indicator');
+                this.messageForm = document.getElementById('message-form');
+                this.messageInput = document.getElementById('message-input');
+                this.sendBtn = document.getElementById('send-btn');
+                this.tryButton = document.getElementById('try-button');
+                this.startButton = document.getElementById('start-button');
+                this.minimizeBtn = document.getElementById('minimize-btn');
+                this.closeBtn = document.getElementById('close-btn');
+                this.timer = document.getElementById('timer');
+                this.statusText = document.getElementById('status-text');
+                
+                // State
+                this.socket = null;
+                this.sessionId = null;
+                this.sessionStartTime = null;
+                this.timerInterval = null;
+                
+                // Initialize
+                this.initEventListeners();
+            }
+            
+            initEventListeners() {
+                this.tryButton.addEventListener('click', () => this.openChat());
+                this.startButton.addEventListener('click', () => this.openChat());
+                this.minimizeBtn.addEventListener('click', () => this.toggleMinimize());
+                this.closeBtn.addEventListener('click', () => this.closeChat());
+                this.messageForm.addEventListener('submit', (e) => this.handleSubmit(e));
+            }
+            
+            openChat() {
+                this.chatWindow.classList.remove('hidden');
+                this.chatWindow.classList.remove('minimized');
+                
+                if (!this.sessionId) {
+                    this.startSession();
+                }
+            }
+            
+            toggleMinimize() {
+                this.chatWindow.classList.toggle('minimized');
+            }
+            
+            closeChat() {
+                this.chatWindow.classList.add('hidden');
+            }
+            
+            startSession() {
+                this.resetChat();
+                this.statusText.textContent = 'Connecting...';
+                
+                // Connect to WebSocket server
+                this.socket = io('http://localhost:5000', {
+                    transports: ['websocket'],
+                    upgrade: false
+                });
+                
+                this.socket.on('connect', () => {
+                    console.log('Connected to server');
+                    this.statusText.textContent = 'Connected';
+                    
+                    // Request a new session
+                    fetch('http://localhost:5000/api/session', {
+                        method: 'POST'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        this.sessionId = data.session_id;
+                        this.sessionStartTime = new Date();
+                        this.messageInput.disabled = false;
+                        this.sendBtn.disabled = false;
+                        this.statusText.textContent = 'Ready to help';
+                        this.startTimer(900); // 15 minutes
+                        this.addWelcomeMessage();
+                    })
+                    .catch(error => {
+                        console.error('Error starting session:', error);
+                        this.statusText.textContent = 'Connection error';
+                        this.addMessage('Sorry, there was an error connecting to the service. Please try again later.', 'bot');
+                    });
+                });
+                
+                this.socket.on('message', (data) => {
+                    this.hideTypingIndicator();
+                    this.addMessage(data.message, 'bot');
+                });
+                
+                this.socket.on('typing', () => {
+                    this.showTypingIndicator();
+                });
+                
+                this.socket.on('disconnect', () => {
+                    console.log('Disconnected from server');
+                    this.statusText.textContent = 'Disconnected';
+                    this.messageInput.disabled = true;
+                    this.sendBtn.disabled = true;
+                });
+                
+                this.socket.on('error', (error) => {
+                    console.error('Socket error:', error);
+                    this.statusText.textContent = 'Error';
+                    this.addMessage('Sorry, there was an error with the connection. Please try again later.', 'bot');
+                });
+            }
+            
+            handleSubmit(e) {
+                e.preventDefault();
+                const message = this.messageInput.value.trim();
+                if (!message) return;
+                
+                this.addMessage(message, 'user');
+                this.messageInput.value = '';
+                
+                // Send message to server
+                this.socket.emit('message', {
+                    session_id: this.sessionId,
+                    message: message
+                });
+                
+                this.showTypingIndicator();
+            }
+            
+            addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+                
+                const avatarSrc = sender === 'bot' 
+                    ? 'https://ui-avatars.com/api/?name=AI&background=1a4789&color=fff'
+                    : 'https://ui-avatars.com/api/?name=You&background=65676b&color=fff';
+                
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">
+                        <img src="${avatarSrc}" alt="${sender === 'bot' ? 'AI' : 'You'}">
+                    </div>
+                    <div class="message-content">${this.escapeHtml(text)}</div>
+                `;
+                
+                this.chatMessages.appendChild(messageDiv);
+                this.scrollToBottom();
+            }
+
+            addWelcomeMessage() {
+                this.addMessage('Hi there! How can I help you today?', 'bot');
+            }
+
+            showTypingIndicator() {
+                this.typingIndicator.classList.remove('hidden');
+                this.scrollToBottom();
+            }
+
+            hideTypingIndicator() {
+                this.typingIndicator.classList.add('hidden');
+            }
+
+            startTimer(seconds) {
+                this.clearTimer();
+                let timeLeft = seconds;
+                
+                this.timerInterval = setInterval(() => {
+                    const minutes = Math.floor(timeLeft / 60);
+                    const secs = timeLeft % 60;
+                    this.timer.textContent = `${minutes}:${secs.toString().padStart(2, '0')}`;
+                    
+                    if (timeLeft <= 0) {
+                        this.clearTimer();
+                        this.addMessage('Your session has ended. Thank you for using ChadCan.Help!', 'bot');
+                        this.messageInput.disabled = true;
+                        this.sendBtn.disabled = true;
+                    }
+                    
+                    timeLeft--;
+                }, 1000);
+            }
+
+            updateTimer(seconds) {
+                this.clearTimer();
+                this.startTimer(seconds);
+            }
+
+            clearTimer() {
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                    this.timerInterval = null;
+                }
+            }
+
+            resetChat() {
+                this.chatMessages.innerHTML = '';
+                this.messageInput.value = '';
+                this.messageInput.disabled = true;
+                this.sendBtn.disabled = true;
+                this.hideTypingIndicator();
+                this.timer.textContent = '15:00';
+                this.statusText.textContent = 'Ready to help';
+                this.sessionId = null;
+                this.sessionStartTime = null;
+            }
+
+            scrollToBottom() {
+                setTimeout(() => {
+                    this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+                }, 100);
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+        }
+
+        // Initialize chat when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new ChadCanChat();
+        });
+    </script>
+
+
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDlUeQ8JY2rVkWM%2FiuG5RnjCNvShjzyqW8HT2BsixoAZ3uLF%2FRJ2eeddNje4hPGYV1JjcVarcqy4UD7pqg%2FD2BjWKGCjc%2BpKh0ZQBVy4mcCJo0vbl5n7nzpIqR1%2FhUSKJEJ5wfyq1pAdSGUOjGBjkXgLxXj4Uirfu8dKZ9McwjuLPOAOcQhIsQaInukYjvuFwp9huk4Naf0igY3uT%2BS8IZIEF714GaVtx4VVoKsYBaBVh564P7B1WmBcjCFpyzsfazssTSUOjC8%2BuF1UBzR2%2BM85%2BxXrpJRLF8wyh%2BOFjsUHKy6jwG3EgaSc7pUejpn2q5HJ62dWnhqMhkOnc8EVYtFvx7VQfDimsEXL9%2BAl2J1cMvWLoSHJEmdXCfzP%2Bq8yzj4rhmKnFPr3Nr%2BRl43VSwt1wRBcQMF48cWszPuslWszWIZgF6OMbvkkIcnh9rOL5hNkT1wPKt4xw5NYcZcmiZuyPxv3P3xNebQcGVSkDIpPSYjt0jFA3DBQKNmUXAsJrwxUa5AN1tW10fVoeUbag5PY%3D";
+        window.__genspark_locale = "en-US";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDlUeQ8JY2rVkWM/iuG5RnjCNvShjzyqW8HT2BsixoAZ3uLF/RJ2eeddNje4hPGYV1JjcVarcqy4UD7pqg/D2BjWKGCjc+pKh0ZQBVy4mcCJo0vbl5n7nzpIqR1/hUSKJEJ5wfyq1pAdSGUOjGBjkXgLxXj4Uirfu8dKZ9McwjuLPOAOcQhIsQaInukYjvuFwp9huk4Naf0igY3uT+S8IZIEF714GaVtx4VVoKsYBaBVh564P7B1WmBcjCFpyzsfazssTSUOjC8+uF1UBzR2+M85+xXrpJRLF8wyh+OFjsUHKy6jwG3EgaSc7pUejpn2q5HJ62dWnhqMhkOnc8EVYtFvx7VQfDimsEXL9+Al2J1cMvWLoSHJEmdXCfzP+q8yzj4rhmKnFPr3Nr+Rl43VSwt1wRBcQMF48cWszPuslWszWIZgF6OMbvkkIcnh9rOL5hNkT1wPKt4xw5NYcZcmiZuyPxv3P3xNebQcGVSkDIpPSYjt0jFA3DBQKNmUXAsJrwxUa5AN1tW10fVoeUbag5PY=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    <div class="genspark-notice-dialog">
+      <div class="genspark-notice-content">
+        <h2 class="genspark-notice-title">This site was created by a user, please note:</h2>
+        <ul class="genspark-notice-list">
+          <li>Content may contain inaccuracies, double-check information before use.</li>
+          <li>If you notice any inappropriate content on this site, please contact us at <a href="mailto:support@genspark.ai">support@genspark.ai</a>.</li>
+        </ul>
+        <div class="genspark-notice-checkbox">
+          <input type="checkbox" id="genspark-dont-show" style="">
+          <label for="genspark-dont-show">Don't show this message again.</label>
+        </div>
+        <div class="genspark-notice-actions">
+          <button class="genspark-notice-ok">OK</button>
+        </div>
+      </div>
     </div>
 </body>
 </html>
