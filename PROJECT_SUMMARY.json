@@ -1,0 +1,96 @@
+{
+  "project": "ChadCan.Help - AI Scam Detection Platform",
+  "version": "1.0.0",
+  "description": "AI-powered platform designed to help users identify and protect themselves from online scams",
+  "files": {
+    "html": [
+      "index.html",
+      "404.html"
+    ],
+    "css": [
+      "css/styles.css"
+    ],
+    "javascript": [
+      "js/app.js",
+      "js/chad.js",
+      "js/dashboard.js",
+      "js/api.js"
+    ],
+    "data": [
+      "js/scam-database.json"
+    ],
+    "configuration": [
+      ".env.example",
+      "package.json",
+      "Dockerfile",
+      "nginx.conf",
+      "docker-compose.yml",
+      "robots.txt",
+      "sitemap.xml"
+    ],
+    "documentation": [
+      "README.md"
+    ]
+  },
+  "structure": {
+    "frontend": {
+      "main": "index.html",
+      "styles": "css/styles.css",
+      "scripts": {
+        "core": "js/app.js",
+        "chad": "js/chad.js",
+        "dashboard": "js/dashboard.js",
+        "api": "js/api.js"
+      }
+    },
+    "backend": {
+      "server": "server.js",
+      "data": "js/scam-database.json"
+    },
+    "deployment": {
+      "docker": "Dockerfile",
+      "docker_compose": "docker-compose.yml",
+      "nginx": "nginx.conf"
+    }
+  },
+  "github_repo": "https://github.com/k3ss-official/chadcan-help",
+  "integration_points": [
+    {
+      "name": "OpenAI API",
+      "configuration": ".env.example",
+      "implementation": "js/api.js"
+    },
+    {
+      "name": "Express Server",
+      "configuration": "server.js",
+      "purpose": "API proxying and serving static files"
+    },
+    {
+      "name": "Chad Chatbot",
+      "implementation": "js/chad.js",
+      "integration": "OpenAI GPT-4o"
+    }
+  ],
+  "deployment_options": [
+    {
+      "name": "Docker",
+      "files": [
+        "Dockerfile",
+        "docker-compose.yml"
+      ],
+      "command": "docker-compose up -d"
+    },
+    {
+      "name": "Node.js",
+      "files": [
+        "server.js",
+        "package.json"
+      ],
+      "command": "npm start"
+    },
+    {
+      "name": "Static Server",
+      "command": "python3 -m http.server 8000"
+    }
+  ]
+}

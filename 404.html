@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - ChadCan.Help</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        h1 {
+            color: #1877f2;
+            margin-bottom: 10px;
+        }
+
+        .error-code {
+            font-size: 72px;
+            font-weight: bold;
+            color: #1877f2;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .message {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background-color: #1877f2;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: #166fe5;
+        }
+
+        .icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .help-text {
+            margin-top: 30px;
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+
+            .error-code {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🤔</div>
+        <p class="error-code">404</p>
+        <h1>Page Not Found</h1>
+        <div class="message">
+            Hmm, the page you're looking for seems to have disappeared. 
+            Maybe it's been scammed too!
+        </div>
+        <a href="/" class="back-btn">Back to Safety</a>
+        <div class="help-text">
+            <p>Need help identifying a scam? Chat with Chad on our homepage!</p>
+            <p>Remember: If you suspect bank fraud, dial 159 to connect safely with your bank.</p>
+        </div>
+    </div>
+</body>
+</html>

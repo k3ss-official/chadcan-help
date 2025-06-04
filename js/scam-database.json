@@ -1,0 +1,117 @@
+{
+  "scam_categories": [
+    {
+      "id": "marketplace",
+      "name": "Facebook Marketplace Scams",
+      "description": "Fraudulent listings and fake sellers on Facebook Marketplace",
+      "warning_level": "high",
+      "prevalence": "73% of purchase fraud cases",
+      "estimated_losses": "£60M in 2023",
+      "common_patterns": [
+        "Too-good-to-be-true pricing",
+        "Refusal to meet in person",
+        "Requests for payment via bank transfer only",
+        "Redirecting to external websites",
+        "Generic or stolen product photos"
+      ],
+      "red_flags": [
+        "Seller refuses to show product on video call",
+        "Account was created very recently",
+        "Seller pushes for immediate payment",
+        "Unusual communication patterns or broken English",
+        "Listing price significantly below market value"
+      ],
+      "report_steps": [
+        "Report listing to Facebook",
+        "Contact your bank if payment was made",
+        "Report to Action Fraud: 0300 123 2040",
+        "Document all communications with seller"
+      ],
+      "examples": [
+        {
+          "title": "iPhone 13 Pro (Brand New) - £300",
+          "description": "Seller refuses to meet in person, requests payment via bank transfer, then disappears",
+          "red_flags": ["Price 50% below market value", "External payment requested", "No proof of purchase"]
+        }
+      ]
+    },
+    {
+      "id": "romance",
+      "name": "Romance Scams",
+      "description": "Fraudulent relationships built to extract money from victims",
+      "warning_level": "severe",
+      "prevalence": "27% increase since 2020",
+      "estimated_losses": "£92M in 2024",
+      "common_patterns": [
+        "Quick expressions of deep feelings",
+        "Unable to video call or meet in person",
+        "Claims to be working abroad in military or oil industry",
+        "Sob stories leading to requests for money",
+        "Profile photos often stolen from models or military personnel"
+      ],
+      "red_flags": [
+        "Rapid declaration of love",
+        "Consistent excuses to avoid video calls",
+        "Requests for money for emergencies",
+        "Claims to be wealthy but needs financial help",
+        "Poor grammar/inconsistent personal details"
+      ],
+      "report_steps": [
+        "Stop all communication immediately",
+        "Report profile to the platform (Facebook, dating site)",
+        "Contact your bank if payments were made",
+        "Report to Action Fraud: 0300 123 2040",
+        "Save all conversations and photos as evidence"
+      ],
+      "examples": [
+        {
+          "title": "Military Doctor in Syria",
+          "description": "Claims to be a US military doctor in Syria, falls in love quickly, then needs money for 'emergency surgery' or to come visit",
+          "red_flags": ["Refuses video calls", "Falls in love within days", "Claims to have large wealth but can't access it"]
+        }
+      ]
+    },
+    {
+      "id": "parcel",
+      "name": "Fake Parcel/Courier Scams",
+      "description": "SMS and email scams claiming to be from delivery companies",
+      "warning_level": "high",
+      "prevalence": "Widespread across UK",
+      "estimated_losses": "Average £45 per victim",
+      "common_patterns": [
+        "Text messages claiming a failed delivery attempt",
+        "Links to fake courier websites (Royal Mail, DPD, Hermes)",
+        "Small 'redelivery fee' requested (usually £1.99-£3.99)",
+        "Requesting payment card details",
+        "Often claims package is held due to unpaid customs fees"
+      ],
+      "red_flags": [
+        "Poor spelling and grammar in messages",
+        "Suspicious URLs (not official domain)",
+        "Urgent tone demanding immediate payment",
+        "Request for complete card details",
+        "Unexpected delivery notification"
+      ],
+      "report_steps": [
+        "Never click links in suspicious texts/emails",
+        "Forward suspicious texts to 7726",
+        "Forward emails to report@phishing.gov.uk",
+        "If you've entered card details, contact your bank immediately",
+        "Report to Action Fraud if money was taken"
+      ],
+      "examples": [
+        {
+          "title": "Royal Mail Customs Fee",
+          "description": "Text claiming a parcel is held by customs and needs a £2.99 fee paid, links to fake Royal Mail website",
+          "red_flags": ["Suspicious URL (not royalmail.com)", "Requests full card details", "Unusual sender number"]
+        }
+      ]
+    }
+  ],
+  "emergency_contacts": {
+    "bank_fraud": "159",
+    "action_fraud": "0300 123 2040",
+    "hmrc_phishing": "phishing@hmrc.gov.uk",
+    "report_text_scams": "Forward to 7726"
+  }
+}

@@ -1,0 +1,19 @@
+/**
+ * ChadCan.Help - Main CSS Styles
+ * Contains all styling for the scam detection platform
+ */
+
+
+        .hero-gradient { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .threat-pulse { animation: pulse 2s infinite; }
+        .scam-card { transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        .scam-card:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); }
+        .counter-animate { animation: countUp 2s ease-out; }
+        @keyframes countUp { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
+        .chat-bubble { max-width: 80%; word-wrap: break-word; }
+        .typing-indicator { animation: typing 1.5s infinite; }
+        @keyframes typing { 0%, 60%, 100% { opacity: 0.4; } 30% { opacity: 1; } }
+        .emergency-banner { background: linear-gradient(45deg, #dc2626, #ef4444); animation: urgentFlash 3s infinite; }
+        @keyframes urgentFlash { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+    
+

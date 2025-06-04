@@ -1,103 +1,139 @@
-# ChadCan.Help
+# ChadCan.Help - AI Scam Detection Platform
 
-A lightweight landing page with a free chat feature triggered from Facebook CTA.
+## Overview
 
-## Project Overview
-
-ChadCan.Help is a web application that provides a landing page with a Messenger-style chat popout window. The application allows visitors to chat with an AI assistant for up to 15 minutes per session.
+ChadCan.Help is an AI-powered platform designed to help users identify and protect themselves from online scams, particularly those targeting UK users on Facebook, Instagram, and WhatsApp. The platform features an interactive AI chatbot named Chad, comprehensive scam analytics, and educational resources.
 
 ## Features
 
-- Responsive landing page with TailwindCSS styling
-- Messenger-style chat popout window (separate window, not iframe)
-- Speech bubbles and typing indicator for a Messenger-like feel
-- 15-minute maximum chat session per visitor
-- Real-time chat messaging using WebSocket
-- Integration with OpenAI Chat Completions API
+- **AI-powered Chat Assistant**: Chad uses GPT-4o to analyze and detect potential scams with near-perfect accuracy
+- **GDPR-compliant**: Session-only data processing with no permanent storage of sensitive information
+- **UK Scam Heatmap**: Visual representation of scam activity across the UK
+- **Global Threat Intelligence**: Visualization of non-UK scam origins
+- **Professional Reports**: Downloadable PDF reports with comprehensive scam analysis
+- **Emergency Guidance**: Clear instructions for contacting banks and reporting fraud
+- **Scam Categories**: Detailed information on romance scams, marketplace fraud, parcel scams, and more
 
-## Repository Structure
+## Project Structure
 
-- `frontend/` - Frontend code with HTML, CSS, and TypeScript
-- `backend/` - Flask server with WebSocket support and OpenAI integration
-- `deployment_guide.md` - Comprehensive guide for setting up and deploying the application
-- `deploy.sh` - Deployment script for automating the deployment process
+```
+/
+├── index.html               # Main HTML page
+├── server.js                # Express server for API proxying
+├── css/
+│   └── styles.css           # All styling for the platform
+├── js/
+│   ├── app.js               # Core application logic
+│   ├── chad.js              # Chad AI chatbot implementation
+│   ├── api.js               # OpenAI API integration
+│   └── dashboard.js         # Analytics and visualizations
+├── assets/                  # Images, icons, and other static files
+├── .env.example             # Template for API configuration
+├── package.json             # Project dependencies
+├── Dockerfile               # Container configuration
+├── nginx.conf               # Nginx web server configuration
+└── README.md                # This file
+```
 
-## Setup and Installation
+## Setup Instructions
 
-### Frontend Setup
+### Local Development
 
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
+1. Clone this repository
+   ```
+   git clone https://github.com/k3ss-official/chadcan-help.git
+   cd chadcan-help
    ```
 
-2. Install dependencies:
-   ```bash
+2. Copy .env.example to .env and add your OpenAI API key
+   ```
+   cp .env.example .env
+   # Edit .env with your API key
+   ```
+
+3. Install dependencies
+   ```
    npm install
    ```
 
-3. Build the frontend:
-   ```bash
-   npm run build
+4. Start the development server
+   ```
+   npm run dev
    ```
 
-### Backend Setup
+5. Visit http://localhost:3000 in your browser
 
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
+### Production Deployment
+
+#### Using Docker
+
+1. Build the Docker image
+   ```
+   docker build -t chadcan-help .
    ```
 
-2. Create a virtual environment:
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+2. Run the container
+   ```
+   docker run -p 80:80 -e OPENAI_API_KEY=your_api_key chadcan-help
    ```
 
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
+#### Deploying to Hetzner
+
+1. Create a new Hetzner Cloud server with Docker installed
+
+2. SSH into your server
+   ```
+   ssh root@your_server_ip
    ```
 
-4. Create a `.env` file:
-   ```bash
+3. Clone the repository
+   ```
+   git clone https://github.com/k3ss-official/chadcan-help.git
+   ```
+
+4. Set up environment variables
+   ```
+   cd chadcan-help
    cp .env.example .env
+   nano .env  # Add your API keys
    ```
 
-5. Update the `.env` file with your OpenAI API key and other settings.
-
-## Running the Application Locally
-
-1. Start the backend server:
-   ```bash
-   cd backend
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   python app.py
+5. Deploy using Docker Compose
+   ```
+   docker-compose up -d
    ```
 
-2. Open the frontend in a web browser:
-   ```
-   file:///path/to/frontend/dist/index.html
-   ```
+6. Configure domain and SSL with Nginx/Certbot
 
-## Deployment
+## Technical Details
 
-For detailed deployment instructions, please refer to the `deployment_guide.md` file. The guide covers:
+The platform uses:
+- **GPT-4o** for AI-powered scam detection
+- **Express.js** for the backend API proxy
+- **Session-only data processing** for GDPR compliance
+- **Chart.js** for data visualization
+- **LeafletJS** for interactive maps
+- **Vanilla JavaScript** for frontend (no framework dependencies)
 
-1. Setting up a Cloud VM (Lightsail or DigitalOcean)
-2. Configuring SSL certificates
-3. Deploying the frontend and backend
-4. Testing the deployment
+## Legal Compliance
 
-You can also use the provided `deploy.sh` script to automate the deployment process.
+- Session-only processing under GDPR Article 6(1)(f) legitimate interest
+- User consent required via click-through agreement
+- No permanent storage of conversation data
+- PDF reports are only stored if user requests email
 
-## Session Management
+## Contributing
 
-The application enforces a 15-minute maximum chat session per visitor using:
-- Server-side session tracking
-- Signed cookies
-- IP+UserAgent hash for identification
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-Private repository - All rights reserved.
+All Rights Reserved - ChadCan.Help Team
+
+## Contact
+
+For support or inquiries, contact help@chadcan.help

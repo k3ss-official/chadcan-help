@@ -1,0 +1,7 @@
+# robots.txt for ChadCan.Help
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+# Sitemap
+Sitemap: https://chadcan.help/sitemap.xml

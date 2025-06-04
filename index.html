@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   ChadCan.Help - Ultimate Scam Intelligence Platform
+  </title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
+  <link href="css/styles.css" rel="stylesheet"/>
+ </head>
+ <body class="bg-gray-50">
+  <!-- Emergency 159 Banner -->
+  <div class="emergency-banner text-white text-center py-3 font-bold text-lg">
+   <i class="fas fa-exclamation-triangle mr-2">
+   </i>
+   DON'T WASTE TIME - DIAL 159 IF UNSURE ABOUT ANY BANK CALL
+   <i class="fas fa-exclamation-triangle ml-2">
+   </i>
+  </div>
+  <!-- Header -->
+  <header class="bg-white shadow-lg">
+   <div class="container mx-auto px-6 py-4">
+    <div class="flex items-center justify-between">
+     <div class="flex items-center space-x-4">
+      <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center">
+       <i class="fas fa-shield-alt text-xl">
+       </i>
+      </div>
+      <div>
+       <h1 class="text-2xl font-bold text-gray-800">
+        ChadCan.Help
+       </h1>
+       <p class="text-sm text-gray-600">
+        UK Scam Intelligence Platform
+       </p>
+      </div>
+     </div>
+     <div class="flex items-center space-x-4">
+      <div class="text-right">
+       <div class="text-sm text-gray-600">
+        Live Threat Level
+       </div>
+       <div class="flex items-center">
+        <span class="w-3 h-3 bg-red-500 rounded-full threat-pulse mr-2">
+        </span>
+        <span class="font-bold text-red-600">
+         HIGH
+        </span>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </header>
+  <!-- Hero Section with Live Counters -->
+  <section class="hero-gradient text-white py-16">
+   <div class="container mx-auto px-6 text-center">
+    <h2 class="text-4xl md:text-6xl font-bold mb-6">
+     Stop Scams Before They Stop You
+    </h2>
+    <p class="text-xl mb-8 opacity-90">
+     Real-time threat intelligence • AI-powered detection • Instant protection
+    </p>
+    <!-- Live Threat Counters -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+     <div class="bg-white bg-opacity-20 rounded-lg p-4 counter-animate">
+      <div class="text-3xl font-bold" id="scamsToday">
+       2,847
+      </div>
+      <div class="text-sm opacity-80">
+       Scams Today
+      </div>
+     </div>
+     <div class="bg-white bg-opacity-20 rounded-lg p-4 counter-animate">
+      <div class="text-3xl font-bold" id="moneyLost">
+       £847k
+      </div>
+      <div class="text-sm opacity-80">
+       Lost This Week
+      </div>
+     </div>
+     <div class="bg-white bg-opacity-20 rounded-lg p-4 counter-animate">
+      <div class="text-3xl font-bold" id="usersProtected">
+       12,439
+      </div>
+      <div class="text-sm opacity-80">
+       Users Protected
+      </div>
+     </div>
+     <div class="bg-white bg-opacity-20 rounded-lg p-4 counter-animate">
+      <div class="text-3xl font-bold" id="activeThreats">
+       34
+      </div>
+      <div class="text-sm opacity-80">
+       Active Threats
+      </div>
+     </div>
+    </div>
+    <!-- Main CTA -->
+    <button class="bg-white text-blue-600 font-bold py-4 px-8 rounded-full text-xl hover:bg-gray-100 transition-all duration-300 shadow-lg" onclick="showAgreement()">
+     <i class="fas fa-robot mr-2">
+     </i>
+     Think You've Been Scammed? Just Ask Chad
+    </button>
+   </div>
+  </section>
+  <!-- Global Threat Intelligence Dashboard -->
+  <section class="py-16 bg-white">
+   <div class="container mx-auto px-6">
+    <h3 class="text-3xl font-bold text-center mb-12 text-gray-800">
+     Global Threat Intelligence
+    </h3>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+     <!-- UK Heatmap -->
+     <div class="bg-gray-50 rounded-lg p-6">
+      <h4 class="text-xl font-bold mb-4 text-gray-800">
+       <i class="fas fa-map-marked-alt mr-2 text-blue-600">
+       </i>
+       UK Threat Heatmap
+      </h4>
+      <div class="h-96 rounded-lg border-2 border-gray-200" id="ukMap">
+      </div>
+      <div class="mt-4 flex justify-between text-sm">
+       <span class="flex items-center">
+        <span class="w-3 h-3 bg-green-400 rounded mr-2">
+        </span>
+        Low Risk
+       </span>
+       <span class="flex items-center">
+        <span class="w-3 h-3 bg-yellow-400 rounded mr-2">
+        </span>
+        Medium Risk
+       </span>
+       <span class="flex items-center">
+        <span class="w-3 h-3 bg-red-400 rounded mr-2">
+        </span>
+        High Risk
+       </span>
+      </div>
+     </div>
+     <!-- Global Scam Origins -->
+     <div class="bg-gray-50 rounded-lg p-6">
+      <h4 class="text-xl font-bold mb-4 text-gray-800">
+       <i class="fas fa-globe mr-2 text-red-600">
+       </i>
+       Scam Origins Worldwide
+      </h4>
+      <div class="h-96 rounded-lg border-2 border-gray-200" id="worldMap">
+      </div>
+      <div class="mt-4 text-sm text-gray-600">
+       <i class="fas fa-info-circle mr-1">
+       </i>
+       Data shows non-UK sources of fraud targeting UK consumers
+      </div>
+     </div>
+    </div>
+    <!-- Live Activity Feed -->
+    <div class="bg-gray-50 rounded-lg p-6">
+     <h4 class="text-xl font-bold mb-4 text-gray-800">
+      <i class="fas fa-rss mr-2 text-green-600">
+      </i>
+      Live Threat Activity
+     </h4>
+     <div class="space-y-3 max-h-64 overflow-y-auto" id="activityFeed">
+      <!-- Live feed populated by JavaScript -->
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Scam Categories -->
+  <section class="py-16 bg-gray-100">
+   <div class="container mx-auto px-6">
+    <h3 class="text-3xl font-bold text-center mb-12 text-gray-800">
+     Scam Detection Center
+    </h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+     <!-- Romance Scams -->
+     <div class="scam-card bg-white rounded-lg p-6 cursor-pointer" onclick="openChadWithContext('romance')">
+      <div class="text-4xl mb-4">
+       💔
+      </div>
+      <h4 class="text-xl font-bold mb-2">
+       Romance Scams
+      </h4>
+      <p class="text-gray-600 mb-4">
+       £92M lost in 2024. Targeting lonely hearts with fake relationships.
+      </p>
+      <div class="flex justify-between items-center">
+       <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
+        Critical Risk
+       </span>
+       <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        Ask Chad
+        <i class="fas fa-arrow-right ml-1">
+        </i>
+       </button>
+      </div>
+     </div>
+     <!-- Facebook Marketplace -->
+     <div class="scam-card bg-white rounded-lg p-6 cursor-pointer" onclick="openChadWithContext('marketplace')">
+      <div class="text-4xl mb-4">
+       🛒
+      </div>
+      <h4 class="text-xl font-bold mb-2">
+       Facebook Marketplace
+      </h4>
+      <p class="text-gray-600 mb-4">
+       73% of purchase fraud. 34% of listings may be fake.
+      </p>
+      <div class="flex justify-between items-center">
+       <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
+        Critical Risk
+       </span>
+       <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        Ask Chad
+        <i class="fas fa-arrow-right ml-1">
+        </i>
+       </button>
+      </div>
+     </div>
+     <!-- Fake Parcel Tracking -->
+     <div class="scam-card bg-white rounded-lg p-6 cursor-pointer" onclick="openChadWithContext('parcel')">
+      <div class="text-4xl mb-4">
+       📦
+      </div>
+      <h4 class="text-xl font-bold mb-2">
+       Fake Parcel Tracking
+      </h4>
+      <p class="text-gray-600 mb-4">
+       Royal Mail, DPD, Hermes impersonation with fake customs fees.
+      </p>
+      <div class="flex justify-between items-center">
+       <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">
+        High Risk
+       </span>
+       <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        Ask Chad
+        <i class="fas fa-arrow-right ml-1">
+        </i>
+       </button>
+      </div>
+     </div>
+     <!-- Crypto Investment -->
+     <div class="scam-card bg-white rounded-lg p-6 cursor-pointer" onclick="openChadWithContext('crypto')">
+      <div class="text-4xl mb-4">
+       ₿
+      </div>
+      <h4 class="text-xl font-bold mb-2">
+       Fake Crypto Investment
+      </h4>
+      <p class="text-gray-600 mb-4">
+       £35M stolen via deepfake celebrity endorsements.
+      </p>
+      <div class="flex justify-between items-center">
+       <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
+        Critical Risk
+       </span>
+       <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        Ask Chad
+        <i class="fas fa-arrow-right ml-1">
+        </i>
+       </button>
+      </div>
+     </div>
+     <!-- Tech Support -->
+     <div class="scam-card bg-white rounded-lg p-6 cursor-pointer" onclick="openChadWithContext('tech_support')">
+      <div class="text-4xl mb-4">
+       💻
+      </div>
+      <h4 class="text-xl font-bold mb-2">
+       Tech Support Scams
+      </h4>
+      <p class="text-gray-600 mb-4">
+       AnyDesk/TeamViewer remote access targeting elderly users.
+      </p>
+      <div class="flex justify-between items-center">
+       <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">
+        High Risk
+       </span>
+       <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        Ask Chad
+        <i class="fas fa-arrow-right ml-1">
+        </i>
+       </button>
+      </div>
+     </div>
+     <!-- Customs/HMRC -->
+     <div class="scam-card bg-white rounded-lg p-6 cursor-pointer" onclick="openChadWithContext('customs')">
+      <div class="text-4xl mb-4">
+       🏛️
+      </div>
+      <h4 class="text-xl font-bold mb-2">
+       Fake Customs/HMRC
+      </h4>
+      <p class="text-gray-600 mb-4">
+       Fake government fees and tax refund scams.
+      </p>
+      <div class="flex justify-between items-center">
+       <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">
+        High Risk
+       </span>
+       <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        Ask Chad
+        <i class="fas fa-arrow-right ml-1">
+        </i>
+       </button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- GDPR Agreement Modal -->
+  <div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center" id="agreementModal">
+   <div class="bg-white rounded-lg p-8 max-w-2xl mx-4 max-h-96 overflow-y-auto">
+    <h3 class="text-2xl font-bold mb-4 text-gray-800">
+     <i class="fas fa-shield-alt mr-2 text-blue-600">
+     </i>
+     Privacy &amp; Data Protection Agreement
+    </h3>
+    <div class="space-y-4 text-gray-700">
+     <div class="bg-blue-50 p-4 rounded-lg">
+      <h4 class="font-bold text-blue-800 mb-2">
+       🔒 Your Privacy is Protected
+      </h4>
+      <p class="text-sm">
+       All conversation data is processed temporarily and
+       <strong>
+        automatically deleted
+       </strong>
+       when you close this session. We do not store or retain any personal information you share.
+      </p>
+     </div>
+     <div class="bg-green-50 p-4 rounded-lg">
+      <h4 class="font-bold text-green-800 mb-2">
+       📧 Email Summary Available
+      </h4>
+      <p class="text-sm">
+       Before ending your session, Chad will offer to email you a complete summary of our conversation and any findings. This is the only way to keep a record as everything is deleted after you close this window.
+      </p>
+     </div>
+     <div class="bg-yellow-50 p-4 rounded-lg">
+      <h4 class="font-bold text-yellow-800 mb-2">
+       ⚡ Session-Only Processing
+      </h4>
+      <p class="text-sm">
+       We process your data temporarily to provide scam detection services under legitimate interest (GDPR Article 6(1)(f)). No permanent storage, no tracking, no data retention.
+      </p>
+     </div>
+     <p class="text-sm">
+      By clicking "I Agree &amp; Start Session", you consent to temporary processing for fraud prevention purposes and confirm you've read our
+      <a class="text-blue-600 underline" href="#">
+       Terms &amp; Conditions
+      </a>
+      .
+     </p>
+    </div>
+    <div class="flex space-x-4 mt-6">
+     <button class="flex-1 bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400" onclick="closeModal()">
+      <i class="fas fa-times mr-2">
+      </i>
+      Close
+     </button>
+     <button class="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700" onclick="startChadSession()">
+      <i class="fas fa-check mr-2">
+      </i>
+      I Agree &amp; Start Session
+     </button>
+    </div>
+   </div>
+  </div>
+  <!-- Chad Chat Modal -->
+  <div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center" id="chatModal">
+   <div class="bg-white rounded-lg w-full max-w-md mx-4 h-5/6 flex flex-col">
+    <!-- Chat Header -->
+    <div class="bg-blue-600 text-white rounded-t-lg p-4 flex items-center justify-between">
+     <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+       <i class="fas fa-robot text-blue-600">
+       </i>
+      </div>
+      <div>
+       <h4 class="font-bold">
+        Chad
+       </h4>
+       <p class="text-xs opacity-80">
+        Scam Detection AI
+       </p>
+      </div>
+     </div>
+     <div class="flex items-center space-x-3">
+      <div class="text-right text-xs">
+       <div>
+        Free Time:
+        <span id="freeTimer">
+         10:00
+        </span>
+       </div>
+       <div class="opacity-80">
+        Session ends when closed
+       </div>
+      </div>
+      <button class="text-white hover:text-gray-200" onclick="closeChatModal()">
+       <i class="fas fa-times text-xl">
+       </i>
+      </button>
+     </div>
+    </div>
+    <!-- Chat Messages -->
+    <div class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50" id="chatMessages">
+     <!-- Messages populated by JavaScript -->
+    </div>
+    <!-- Chat Input -->
+    <div class="border-t bg-white p-4 rounded-b-lg">
+     <div class="flex space-x-2">
+      <input class="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" id="chatInput" placeholder="Describe what's worrying you..." type="text"/>
+      <button class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-blue-700" onclick="sendMessage()">
+       <i class="fas fa-paper-plane">
+       </i>
+      </button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8">
+   <div class="container mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+     <div>
+      <h5 class="font-bold mb-4">
+       Emergency Contacts
+      </h5>
+      <div class="space-y-2 text-sm">
+       <div>
+        <strong>
+         Dial 159:
+        </strong>
+        Connect to your bank safely
+       </div>
+       <div>
+        <strong>
+         Action Fraud:
+        </strong>
+        0300 123 2040
+       </div>
+       <div>
+        <strong>
+         Emergency:
+        </strong>
+        999
+       </div>
+      </div>
+     </div>
+     <div>
+      <h5 class="font-bold mb-4">
+       Report Scams
+      </h5>
+      <div class="space-y-2 text-sm">
+       <div>
+        actionfraud.police.uk
+       </div>
+       <div>
+        HMRC Phishing:
+        <a class="__cf_email__" data-cfemail="7f0f17160c171611183f17120d1c51181009510a14" href="/cdn-cgi/l/email-protection">
+         [email protected]
+        </a>
+       </div>
+       <div>
+        Text: Forward to 7726
+       </div>
+      </div>
+     </div>
+     <div>
+      <h5 class="font-bold mb-4">
+       Data Protection
+      </h5>
+      <div class="space-y-2 text-sm">
+       <div>
+        ✓ Session-only processing
+       </div>
+       <div>
+        ✓ No permanent storage
+       </div>
+       <div>
+        ✓ GDPR compliant
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="border-t border-gray-600 mt-8 pt-6 text-center text-sm">
+     <p>
+      © 2024 ChadCan.Help. Educational fraud prevention service. Always verify with official sources.
+     </p>
+    </div>
+   </div>
+  </footer>
+  <script defer="True" src="js/app.js">
+  </script>
+  <script defer="True" src="js/chad.js">
+  </script>
+  <script defer="True" src="js/dashboard.js">
+  </script>
+ </body>
+</html>

@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  chadcan-help:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - MODEL_NAME=${MODEL_NAME:-gpt-4o}
+    volumes:
+      - ./logs:/var/log/nginx
+
+  # Optional: Add database for storing anonymized stats
+  # db:
+  #   image: postgres:14
+  #   environment:
+  #     - POSTGRES_PASSWORD=your_password
+  #     - POSTGRES_DB=chadcan_help
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+
+# volumes:
+#   pgdata:
