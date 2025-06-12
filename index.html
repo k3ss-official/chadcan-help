@@ -107,6 +107,15 @@
     </button>
    </div>
   </section>
+
+  <!-- Timer Adjustment Slider for Testing (Basic) -->
+  <div class="container mx-auto px-6 py-8 text-center">
+    <div class="mt-4 p-4 bg-gray-200 rounded-lg shadow-inner max-w-md mx-auto">
+        <label for="timeAdjustSlider" class="block text-sm font-medium text-gray-700">Adjust Timer (seconds): <span id="sliderValueDisplay">600</span>s</label>
+        <input type="range" id="timeAdjustSlider" min="0" max="600" value="600" class="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer">
+    </div>
+  </div>
+
   <!-- Global Threat Intelligence Dashboard -->
   <section class="py-16 bg-white">
    <div class="container mx-auto px-6">
@@ -312,7 +321,8 @@
     </div>
    </div>
   </section>
-  <!-- GDPR Agreement Modal -->
+  <!-- GDPR Agreement Modal (Commented out for this demo) -->
+  <!-- 
   <div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center" id="agreementModal">
    <div class="bg-white rounded-lg p-8 max-w-2xl mx-4 max-h-96 overflow-y-auto">
     <h3 class="text-2xl font-bold mb-4 text-gray-800">
@@ -371,10 +381,12 @@
     </div>
    </div>
   </div>
-  <!-- Chad Chat Modal -->
-  <div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center" id="chatModal">
+  -->
+
+  <!-- Chad Chat Modal (Original one in index.html - Commented out for this demo) -->
+  <!-- 
+  <div class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center" id="chatModal_original_index">
    <div class="bg-white rounded-lg w-full max-w-md mx-4 h-5/6 flex flex-col">
-    <!-- Chat Header -->
     <div class="bg-blue-600 text-white rounded-t-lg p-4 flex items-center justify-between">
      <div class="flex items-center space-x-3">
       <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
@@ -408,14 +420,11 @@
       </button>
      </div>
     </div>
-    <!-- Chat Messages -->
     <div class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50" id="chatMessages">
-     <!-- Messages populated by JavaScript -->
     </div>
-    <!-- Chat Input -->
     <div class="border-t bg-white p-4 rounded-b-lg">
      <div class="flex space-x-2">
-      <input class="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" id="chatInput" placeholder="Describe what's worrying you..." type="text"/>
+      <input class="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" id="chatInput_original_index" placeholder="Describe what's worrying you..." type="text"/>
       <button class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-blue-700" onclick="sendMessage()">
        <i class="fas fa-paper-plane">
        </i>
@@ -424,6 +433,8 @@
     </div>
    </div>
   </div>
+  -->
+
   <!-- Footer -->
   <footer class="bg-gray-800 text-white py-8">
    <div class="container mx-auto px-6">
@@ -498,9 +509,46 @@
   </footer>
   <script defer="True" src="js/app.js">
   </script>
-  <script defer="True" src="js/chad.js">
-  </script>
+  <!-- <script defer="True" src="js/chad.js"></script> --> <!-- Assuming app.js handles chat logic for now -->
   <script defer="True" src="js/dashboard.js">
   </script>
+
+  <!-- New Chat Modal HTML (from facebook_page_tab.html) -->
+  <div id="chatModalOverlay" class="modal-overlay hidden fixed inset-0 flex items-center justify-center p-4">
+    <div id="chatModal" class="chat-modal-container chat-modal-theme bg-white rounded-lg shadow-xl w-full max-w-lg flex flex-col" style="display: none;">
+        <div class="chat-header-theme bg-gray-800 text-white p-4 rounded-t-lg flex justify-between items-center">
+            <h2 class="text-xl font-semibold">Chat with Chad</h2>
+            <div class="text-lg">Time Left: <span id="timeLeft" class="font-bold">10:00</span></div>
+        </div>
+        <div id="messagesArea" class="chat-messages-theme flex-grow p-4 space-y-4 overflow-y-auto h-96">
+            <div class="flex">
+                <div class="chad-bubble bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs shadow">
+                    <p class="text-sm">Hi there! I'm Chad. How can I help you today? Tell me a bit about what's worrying you.</p>
+                </div>
+            </div>
+        </div>
+        <div id="typingIndicator" class="p-4 text-sm text-gray-500" style="display: none;">
+            Chad is typing...
+        </div>
+        <div class="chat-input-area-theme border-t p-4 bg-gray-50 rounded-b-lg">
+            <div class="flex space-x-2">
+                <input type="text" id="messageInput" class="flex-grow border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Type your message...">
+                <button id="sendMessageBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-150 ease-in-out">
+                    Send
+                </button>
+            </div>
+        </div>
+        <div id="pricingOptions" class="p-4 border-t" style="display: none;">
+            <p class="text-center text-gray-700 mb-2">Your free time is up. Choose an option to continue:</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                <button class="pricing-btn bg-green-500 hover:bg-green-600 text-white py-2 px-3 rounded-lg text-sm" data-tier="15">15 mins (£2.99)</button>
+                <button class="pricing-btn bg-green-500 hover:bg-green-600 text-white py-2 px-3 rounded-lg text-sm" data-tier="30">30 mins (£5.49)</button>
+                <button class="pricing-btn bg-green-500 hover:bg-green-600 text-white py-2 px-3 rounded-lg text-sm" data-tier="60">60 mins (£9.99)</button>
+            </div>
+            <button id="noThanksBtn" class="mt-2 w-full text-center text-sm text-blue-600 hover:underline">No thanks, just send the summary.</button>
+        </div>
+    </div>
+  </div>
+
  </body>
 </html>

@@ -1,0 +1,232 @@
+[
+  {
+    "path": ".env",
+    "type": "core logic",
+    "notes": "Environment variables. Migrate structure/template, not actual secrets."
+  },
+  {
+    "path": ".gitignore",
+    "type": "core logic",
+    "notes": "Git ignore rules. Review and merge with target repo's .gitignore."
+  },
+  {
+    "path": "404.html",
+    "type": "UI asset",
+    "notes": "Custom 404 error page."
+  },
+  {
+    "path": "ARCHITECTURE.md",
+    "type": "docs",
+    "notes": "Documentation: Project architecture."
+  },
+  {
+    "path": "CONTRIBUTING.md",
+    "type": "docs",
+    "notes": "Documentation: Contribution guidelines."
+  },
+  {
+    "path": "Dockerfile",
+    "type": "core logic",
+    "notes": "Docker configuration for building the application. Review for new repo structure."
+  },
+  {
+    "path": "GETTING_STARTED.md",
+    "type": "docs",
+    "notes": "Documentation: Getting started guide."
+  },
+  {
+    "path": "LICENSE",
+    "type": "docs",
+    "notes": "Project license file."
+  },
+  {
+    "path": "PROJECT_SUMMARY.json",
+    "type": "docs",
+    "notes": "JSON file with project summary details."
+  },
+  {
+    "path": "README-extra.md",
+    "type": "docs",
+    "notes": "Additional README information."
+  },
+  {
+    "path": "README.md",
+    "type": "docs",
+    "notes": "Main README file."
+  },
+  {
+    "path": "creative/browse_scams_mockup.png",
+    "type": "UI asset",
+    "notes": "Mockup for browsing scams."
+  },
+  {
+    "path": "creative/chatAI/IMG_9283 2.png",
+    "type": "UI asset",
+    "notes": "Chat UI mockup."
+  },
+  {
+    "path": "creative/chatAI/IMG_9283.png",
+    "type": "UI asset",
+    "notes": "Chat UI mockup."
+  },
+  {
+    "path": "creative/chatAI/IMG_9284.png",
+    "type": "UI asset",
+    "notes": "Chat UI mockup with payment options."
+  },
+  {
+    "path": "creative/chatAI/IMG_9285 2.png",
+    "type": "UI asset",
+    "notes": "Chat UI mockup, extended time options."
+  },
+  {
+    "path": "creative/chatAI/IMG_9285 3.png",
+    "type": "UI asset",
+    "notes": "Chat UI mockup."
+  },
+  {
+    "path": "creative/chatAI/IMG_9285 4.png",
+    "type": "UI asset",
+    "notes": "Chat UI mockup."
+  },
+  {
+    "path": "creative/chatAI/IMG_9285.png",
+    "type": "UI asset",
+    "notes": "Chat UI mockup."
+  },
+  {
+    "path": "creative/chatAI/IMG_9296.png",
+    "type": "UI asset",
+    "notes": "Chat UI mockup, message input focus."
+  },
+  {
+    "path": "creative/chatAI/IMG_9298.png",
+    "type": "UI asset",
+    "notes": "Chat UI mockup, package selection modal."
+  },
+  {
+    "path": "creative/chatAI/IMG_9300.png",
+    "type": "UI asset",
+    "notes": "Chat UI mockup, payment confirmation."
+  },
+  {
+    "path": "creative/chatAI/chatUI-1.png",
+    "type": "UI asset",
+    "notes": "Alternative/earlier chat UI mockup."
+  },
+  {
+    "path": "creative/homepage_mockup.png",
+    "type": "UI asset",
+    "notes": "Homepage mockup."
+  },
+  {
+    "path": "creative/report_scam_mockup.png",
+    "type": "UI asset",
+    "notes": "Report scam page mockup."
+  },
+  {
+    "path": "creative/scam_detail_mockup.png",
+    "type": "UI asset",
+    "notes": "Scam detail page mockup."
+  },
+  {
+    "path": "creative/statistics_dashboard_mockup.png",
+    "type": "UI asset",
+    "notes": "Statistics dashboard mockup."
+  },
+  {
+    "path": "css/styles.css",
+    "type": "UI asset",
+    "notes": "Main CSS styles for the platform."
+  },
+  {
+    "path": "docker-compose.yml",
+    "type": "core logic",
+    "notes": "Docker Compose configuration. Review for new repo structure and services."
+  },
+  {
+    "path": "docs/MANUS AI TO VOID IDE_ PRIORITY INSTRUCTIONS.md",
+    "type": "docs",
+    "notes": "Documentation: Specific instructions from Manus AI."
+  },
+  {
+    "path": "docs/VOID IDE PROMPT_ SCAM ALERT UK WITH CHAD\'S PRICING.md",
+    "type": "docs",
+    "notes": "Documentation: Prompt for Chad AI regarding pricing and persona."
+  },
+  {
+    "path": "docs/what_I_have_decided_as_improvements.md",
+    "type": "docs",
+    "notes": "Documentation: Vision for ChadCan.Help improvements and platform revolution."
+  },
+  {
+    "path": "facebook_page_tab.html",
+    "type": "UI asset",
+    "notes": "HTML for Facebook Page tab integration and chat modal."
+  },
+  {
+    "path": "index.html",
+    "type": "UI asset",
+    "notes": "Main HTML file for the web application (likely dashboard)."
+  },
+  {
+    "path": "js/api.js",
+    "type": "core logic",
+    "notes": "Client-side JavaScript for API communication."
+  },
+  {
+    "path": "js/app.js",
+    "type": "core logic",
+    "notes": "Main client-side application logic, including Facebook chat UI."
+  },
+  {
+    "path": "js/chad.js",
+    "type": "core logic",
+    "notes": "JavaScript related to Chad AI's direct functionality (likely legacy or to be merged)."
+  },
+  {
+    "path": "js/dashboard.js",
+    "type": "core logic",
+    "notes": "JavaScript for the dashboard UI and functionality."
+  },
+  {
+    "path": "js/scam-database.json",
+    "type": "core logic",
+    "notes": "JSON data, potentially for scam examples or a local database. Assess if dynamic or static."
+  },
+  {
+    "path": "nginx.conf",
+    "type": "core logic",
+    "notes": "Nginx configuration file. Review for new repo structure."
+  },
+  {
+    "path": "package-lock.json",
+    "type": "core logic",
+    "notes": "Exact dependencies for npm. Essential for reproducible builds."
+  },
+  {
+    "path": "package.json",
+    "type": "core logic",
+    "notes": "Node.js project manifest, scripts, and dependencies."
+  },
+  {
+    "path": "robots.txt",
+    "type": "UI asset",
+    "notes": "Instructions for web crawlers."
+  },
+  {
+    "path": "server.js",
+    "type": "core logic",
+    "notes": "Main Node.js backend server logic."
+  },
+  {
+    "path": "sitemap.xml",
+    "type": "UI asset",
+    "notes": "Sitemap for SEO."
+  },
+  {
+    "path": "test.js",
+    "type": "experimental",
+    "notes": "Likely a test or experimental script. Review for relevance."
+  }
+]

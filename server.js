@@ -3,10 +3,15 @@
  * For development and testing purposes
  */
 
-const express = require('express');
-const path = require('path');
-const dotenv = require('dotenv');
-const cors = require('cors');
+import express from 'express';
+import path from 'path';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Load environment variables
 dotenv.config();

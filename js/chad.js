@@ -1,4 +1,4 @@
-/**
+, /**
  * ChadCan.Help - Chad AI Chatbot
  * Contains all logic for the AI chatbot assistant
  */
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // UK Map with threat levels
 function initializeUKMap() {
     const ukMap = L.map('ukMap').setView([54.5, -3.5], 6);
-    
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(ukMap);
@@ -38,7 +38,7 @@ function initializeUKMap() {
 
     threats.forEach(threat => {
         const color = threat.level === 'high' ? '#dc2626' : threat.level === 'medium' ? '#f59e0b' : '#16a34a';
-        
+
         L.circleMarker(threat.coords, {
             radius: Math.sqrt(threat.count) / 3,
             fillColor: color,
@@ -57,7 +57,7 @@ function initializeUKMap() {
 // World Map showing scam origins
 function initializeWorldMap() {
     const worldMap = L.map('worldMap').setView([20, 0], 2);
-    
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(worldMap);
@@ -93,12 +93,12 @@ function startLiveCounters() {
         const scamsToday = document.getElementById('scamsToday');
         const currentCount = parseInt(scamsToday.textContent.replace(',', ''));
         scamsToday.textContent = (currentCount + Math.floor(Math.random() * 3) + 1).toLocaleString();
-        
+
         // Update money lost
         const moneyLost = document.getElementById('moneyLost');
         const currentMoney = parseInt(moneyLost.textContent.replace(/[£k,]/g, ''));
         moneyLost.textContent = '£' + (currentMoney + Math.floor(Math.random() * 5) + 1) + 'k';
-        
+
         // Update users protected
         const usersProtected = document.getElementById('usersProtected');
         const currentUsers = parseInt(usersProtected.textContent.replace(',', ''));
@@ -120,33 +120,33 @@ function startActivityFeed() {
         '🚨 WhatsApp romance scam in Manchester',
         '🔴 Fake parcel delivery site taken down'
     ];
-    
+
     const feed = document.getElementById('activityFeed');
-    
+
     function addActivity() {
         const activity = activities[Math.floor(Math.random() * activities.length)];
         const timeAgo = Math.floor(Math.random() * 30) + 1;
-        
+
         const activityDiv = document.createElement('div');
         activityDiv.className = 'flex items-center justify-between p-3 bg-white rounded border-l-4 border-blue-500';
         activityDiv.innerHTML = `
             <span class="text-sm">${activity}</span>
             <span class="text-xs text-gray-500">${timeAgo} mins ago</span>
         `;
-        
+
         feed.insertBefore(activityDiv, feed.firstChild);
-        
+
         // Keep only last 10 activities
         while (feed.children.length > 10) {
             feed.removeChild(feed.lastChild);
         }
     }
-    
+
     // Add initial activities
     for (let i = 0; i < 5; i++) {
         setTimeout(addActivity, i * 1000);
     }
-    
+
     // Continue adding every 10 seconds
     setInterval(addActivity, 10000);
 }
@@ -184,7 +184,7 @@ function initializeChat() {
         'customs': 'I see you clicked on "Fake Customs/HMRC" - have you received messages asking for payment of customs fees or tax refunds?',
         'general': 'How can I help you today?'
     };
-    
+
     // Initial greeting
     addMessage('chad', `Hi there! I'm Chad, your AI scam detection assistant.
 
@@ -196,7 +196,7 @@ ${contextMessages[chatContext]}`);
 function addMessage(sender, text, typing = false) {
     const messages = document.getElementById('chatMessages');
     const messageDiv = document.createElement('div');
-    
+
     if (sender === 'chad') {
         messageDiv.className = 'flex items-start space-x-3';
         messageDiv.innerHTML = `
@@ -218,46 +218,89 @@ function addMessage(sender, text, typing = false) {
             </div>
         `;
     }
-    
+
     messages.appendChild(messageDiv);
     messages.scrollTop = messages.scrollHeight;
-    
+
     if (typing) {
         setTimeout(() => {
             messageDiv.remove();
         }, 2000);
     }
-    
+
     return messageDiv;
 }
 
-function sendMessage() {
+async function sendMessage() {
     const input = document.getElementById('chatInput');
-    const message = input.value.trim();
-    
-    if (!message) return;
-    
-    // Add user message
-    addMessage('user', message);
-    chatHistory.push({sender: 'user', message: message});
-    
-    // Clear input
+    const userMessage = input.value.trim();
+
+    if (!userMessage) return;
+
+    addMessage('user', userMessage);
+    // Use {role: 'user', content: userMessage} for chatHistory
+    chatHistory.push({ role: 'user', content: userMessage });
+
     input.value = '';
-    
-    // Show typing indicator
-    addMessage('chad', '', true);
-    
-    // Simulate AI response
-    setTimeout(() => {
-        const response = generateChadResponse(message);
-        addMessage('chad', response);
-        chatHistory.push({sender: 'chad', message: response});
-    }, 2000);
+    const typingIndicator = addMessage('chad', '', true); // Add typing indicator
+
+    try {
+        // Prepare history for the API: map 'sender' to 'role' and 'message' to 'content'
+        // The API expects history *before* the current user message.
+        // However, our current chatHistory includes the latest user message.
+        // The backend server.js expects `history` and then adds the latest `message` from the request body.
+        // So, we should send the history *including* the latest user message if the backend is structured that way,
+        // or exclude the last user message from history and send it as 'message'.
+        // The server.js is: messages: [{ system }, ...history, { user, messageFromReqBody }]
+        // So, history sent should NOT include the current userMessage.
+        const historyForAPI = chatHistory.slice(0, -1).map(item => {
+            return { role: item.role, content: item.content };
+        });
+
+        const requestBody = {
+            message: userMessage, // Current user message
+            history: historyForAPI, // History before current message
+            options: {
+                systemPrompt: 'You are Chad, a friendly AI scam detection expert. Your mission is to protect ordinary people from scammers while being supportive, never judgmental, and always liability-conscious. Remind users to dial 159 to connect safely with their bank if they suspect bank fraud.',
+                maxTokens: 500,
+                temperature: 0.7
+            }
+        };
+
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        });
+
+        if (typingIndicator) typingIndicator.remove(); // Remove typing indicator
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('API Error:', errorData);
+            throw new Error(errorData.error?.message || errorData.error || 'Failed to get response from Chad.');
+        }
+
+        const data = await response.json();
+        const aiResponseText = data.choices[0].message.content;
+
+        addMessage('chad', aiResponseText);
+        // Use {role: 'assistant', content: aiResponseText} for chatHistory
+        chatHistory.push({ role: 'assistant', content: aiResponseText });
+
+    } catch (error) {
+        console.error('Error sending message to API:', error);
+        if (typingIndicator) typingIndicator.remove(); // Ensure removal on error
+        addMessage('chad', `Sorry, I encountered an error: ${error.message}. Please check the console for details and try again.`);
+        // Optionally, don't add the error message to chat history, or add it with a specific role like 'error'
+    }
 }
 
 function generateChadResponse(userMessage) {
     const lowerMessage = userMessage.toLowerCase();
-    
+
     // Scam analysis responses
     if (lowerMessage.includes('tracking') || lowerMessage.includes('parcel') || lowerMessage.includes('delivery')) {
         return `I can help you check that tracking information. Could you share:
@@ -270,7 +313,7 @@ Based on my analysis, I'll give you a detailed report with red flags and next st
 
 And if you're ever unsure about anything - dial 159 to speak safely to your bank.`;
     }
-    
+
     if (lowerMessage.includes('romance') || lowerMessage.includes('dating') || lowerMessage.includes('relationship')) {
         return `I understand this might be difficult to talk about. Romance scams are incredibly sophisticated now.
 
@@ -284,7 +327,7 @@ Based on what you share, I'll provide a thorough analysis. Remember, genuine peo
 
 If you've sent money already, we need to act fast - contact your bank immediately or dial 159.`;
     }
-    
+
     if (lowerMessage.includes('facebook') || lowerMessage.includes('marketplace') || lowerMessage.includes('buying') || lowerMessage.includes('selling')) {
         return `Facebook Marketplace has become a hotspot for scams - 73% of purchase fraud happens there.
 
@@ -294,13 +337,13 @@ Tell me about your situation:
 • Are they asking you to pay through unusual methods?
 • Do they refuse to meet in person?
 
-I'll analyze everything and give you a detailed risk assessment. 
+I'll analyze everything and give you a detailed risk assessment.
 
 If you've already paid and something feels wrong, contact your bank immediately or dial 159 for safe connection to your bank's fraud team.`;
     }
-    
+
     // General supportive response
-    return `I'm here to help you figure this out. Can you tell me more about what's happening? 
+    return `I'm here to help you figure this out. Can you tell me more about what's happening?
 
 For example:
 • What kind of message or contact did you receive?
@@ -317,9 +360,9 @@ function startFreeTimer() {
         freeTimeLeft--;
         const minutes = Math.floor(freeTimeLeft / 60);
         const seconds = freeTimeLeft % 60;
-        document.getElementById('freeTimer').textContent = 
+        document.getElementById('freeTimer').textContent =
             `${minutes}:${seconds.toString().padStart(2, '0')}`;
-        
+
         if (freeTimeLeft === 120) { // 2 minutes left
             addMessage('chad', `Just to let you know - you're coming up to the end of your free 10 minutes.
 
@@ -327,7 +370,7 @@ But I think we can wrap this up soon, so if you're cool with it, the next 10 min
 
 If it looks like it'll go longer, I'll give you the option to continue - totally your call.`);
         }
-        
+
         if (freeTimeLeft <= 0) {
             clearInterval(timerInterval);
             offerEmailSummary();
@@ -336,17 +379,17 @@ If it looks like it'll go longer, I'll give you the option to continue - totally
 }
 
 function offerEmailSummary() {
-    addMessage('chad', `That's your free time up! 
+    addMessage('chad', `That's your free time up!
 
 Before we finish, I need to email you everything we've discussed. Once you close this window, our conversation will be completely deleted for your privacy.
 
 Would you like me to email you:
 • Complete conversation summary
-• Any findings and recommendations  
+• Any findings and recommendations
 • Relevant contact numbers and next steps
 
 Just click "Email Summary" below and I'll prepare everything for you.`);
-    
+
     // Add email button (in real implementation, this would be a proper button)
     const messages = document.getElementById('chatMessages');
     const buttonDiv = document.createElement('div');
@@ -385,7 +428,7 @@ function closeChatModal() {
     if (confirm('Are you sure you want to close? All conversation data will be permanently deleted.')) {
         document.getElementById('chatModal').classList.add('hidden');
         if (timerInterval) clearInterval(timerInterval);
-        
+
         // Reset for next session
         freeTimeLeft = 600;
         chatHistory = [];
