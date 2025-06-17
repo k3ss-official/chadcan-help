@@ -1,4 +1,4 @@
-, /**
+/**
  * ChadCan.Help - Chad AI Chatbot
  * Contains all logic for the AI chatbot assistant
  */
